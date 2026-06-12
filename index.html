@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Yuansen Huang — undergraduate student at Peking University. Research interests: dexterous manipulation, embodied AI, and 3D visual perception."
+  />
+  <title>Yuansen Huang</title>
+
+  <style>
+    :root {
+      --text: #edf6ff;
+      --text-soft: #ccdbeb;
+      --text-muted: #a4b5c7;
+      --line: rgba(255, 255, 255, 0.13);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.30);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --max-width: 1320px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 18%, rgba(70, 126, 255, 0.16), transparent 0 26rem, transparent 54rem),
+        radial-gradient(circle at 82% 18%, rgba(133, 91, 255, 0.14), transparent 0 26rem, transparent 56rem),
+        linear-gradient(180deg, #070d1d 0%, #0a1230 30%, #111d45 58%, #171e50 78%, #100d31 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -14%;
+      z-index: -8;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 16% 20%, rgba(84, 193, 255, 0.10), transparent 34%),
+        radial-gradient(ellipse at 76% 18%, rgba(158, 116, 255, 0.14), transparent 36%),
+        radial-gradient(ellipse at 64% 74%, rgba(88, 230, 214, 0.09), transparent 34%),
+        radial-gradient(ellipse at 30% 84%, rgba(76, 123, 255, 0.08), transparent 36%);
+      filter: blur(54px) saturate(108%);
+      animation: bgFloat 95s ease-in-out infinite alternate;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -7;
+      pointer-events: none;
+      background:
+        linear-gradient(145deg, rgba(70, 133, 255, 0.035), transparent 32%, rgba(150, 104, 255, 0.055) 62%, transparent 88%),
+        linear-gradient(220deg, transparent 0%, rgba(88, 236, 212, 0.040) 36%, transparent 74%);
+      animation: colorShift 120s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgFloat {
+      from {
+        transform: translate3d(-1.2%, 0.4%, 0) scale(1);
+        opacity: 0.82;
+      }
+      to {
+        transform: translate3d(1.8%, -1.2%, 0) scale(1.08);
+        opacity: 1;
+      }
+    }
+
+    @keyframes colorShift {
+      from {
+        transform: translate3d(-0.8%, 0, 0) scale(1);
+        filter: hue-rotate(0deg) saturate(98%);
+      }
+      to {
+        transform: translate3d(0.8%, -0.8%, 0) scale(1.04);
+        filter: hue-rotate(16deg) saturate(112%);
+      }
+    }
+
+    #sky {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -4;
+      pointer-events: none;
+    }
+
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: -6;
+      overflow: hidden;
+      pointer-events: none;
+      opacity: 0.90;
+    }
+
+    .ribbon {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(54px);
+      mix-blend-mode: screen;
+      opacity: 0.32;
+    }
+
+    .r1 {
+      width: 80vw;
+      height: 24vh;
+      left: -20vw;
+      top: 8vh;
+      background: linear-gradient(90deg, transparent, rgba(78, 213, 255, 0.48), rgba(132, 114, 255, 0.24), transparent);
+      animation: wave1 110s ease-in-out infinite alternate;
+    }
+
+    .r2 {
+      width: 72vw;
+      height: 22vh;
+      right: -18vw;
+      top: 30vh;
+      background: linear-gradient(90deg, transparent, rgba(120, 108, 255, 0.36), rgba(86, 232, 217, 0.22), transparent);
+      animation: wave2 135s ease-in-out infinite alternate;
+    }
+
+    .r3 {
+      width: 84vw;
+      height: 28vh;
+      left: 4vw;
+      bottom: 10vh;
+      background: linear-gradient(90deg, transparent, rgba(84, 148, 255, 0.18), rgba(148, 122, 255, 0.22), rgba(88, 223, 218, 0.14), transparent);
+      animation: wave3 125s ease-in-out infinite alternate;
+    }
+
+    @keyframes wave1 {
+      from { transform: translate3d(0, 0, 0) rotate(-7deg) scale(1.02); }
+      to { transform: translate3d(10vw, 3vh, 0) rotate(6deg) scale(1.10); }
+    }
+
+    @keyframes wave2 {
+      from { transform: translate3d(0, 0, 0) rotate(8deg); }
+      to { transform: translate3d(-11vw, -6vh, 0) rotate(-5deg); }
+    }
+
+    @keyframes wave3 {
+      from { transform: translate3d(0, 0, 0) rotate(-4deg); }
+      to { transform: translate3d(6vw, -8vh, 0) rotate(5deg); }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      width: min(var(--max-width), calc(100% - 44px));
+      margin: 0 auto;
+      padding: 42px 0 72px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 22px;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+    }
+
+    .nav a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: rgba(237,246,255,0.84);
+      font-size: 0.92rem;
+      font-weight: 680;
+      transition: 180ms ease;
+    }
+
+    .nav a:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-1px);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 330px minmax(0, 1fr);
+      gap: 30px;
+      align-items: start;
+    }
+
+    .panel,
+    .section,
+    .intro-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03)),
+        rgba(255,255,255,0.02);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      position: sticky;
+      top: 24px;
+      padding: 24px;
+    }
+
+    .avatar {
+      width: 190px;
+      height: 230px;
+      margin: 8px auto 22px;
+      border-radius: 30px;
+      border: 1.6px solid rgba(255,255,255,0.22);
+      background:
+        url("assets/profile.jpg") center 18% / cover no-repeat,
+        rgba(255,255,255,0.04);
+      box-shadow:
+        0 18px 40px rgba(0,0,0,0.24),
+        inset 0 0 0 1px rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .avatar::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      border: 1px solid rgba(165, 219, 255, 0.16);
+      pointer-events: none;
+    }
+
+    .panel h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 2.22rem;
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .cn-name {
+      margin: 9px 0 16px;
+      text-align: center;
+      color: var(--text-soft);
+      font-weight: 760;
+      letter-spacing: 0.18em;
+      font-size: 1.02rem;
+    }
+
+    .role {
+      margin: 0 auto 8px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+
+    .info-list {
+      display: grid;
+      gap: 10px;
+      margin: 24px 0 0;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 13px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      color: rgba(237,246,255,0.90);
+      font-size: 0.95rem;
+      overflow-wrap: anywhere;
+    }
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.08);
+      flex: 0 0 auto;
+    }
+
+    .content {
+      display: grid;
+      gap: 22px;
+    }
+
+    .intro-card {
+      padding: 40px 42px;
+      min-height: 245px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intro-card::after {
+      content: "";
+      position: absolute;
+      right: -100px;
+      top: -90px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(110, 205, 255, 0.10), rgba(124, 105, 255, 0.07) 46%, transparent 72%);
+      pointer-events: none;
+    }
+
+    .intro-text {
+      max-width: 850px;
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 1.10rem;
+      line-height: 2.0;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: rgba(237,246,255,0.86);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .section {
+      padding: 28px 30px;
+      scroll-margin-top: 28px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: 1.24rem;
+      letter-spacing: -0.03em;
+    }
+
+    .section-kicker {
+      color: rgba(237,246,255,0.48);
+      font-size: 0.84rem;
+      font-weight: 820;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .section p {
+      margin: 0;
+      color: var(--text-soft);
+      line-height: 1.9;
+    }
+
+    .publication {
+      display: grid;
+      gap: 10px;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .pub-title {
+      margin: 0;
+      font-size: 1.18rem;
+      line-height: 1.45;
+      letter-spacing: -0.025em;
+    }
+
+    .authors, .venue {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .authors strong {
+      color: var(--text);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      font-size: 0.92rem;
+      font-weight: 720;
+      color: var(--text);
+      transition: 180ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.12);
+    }
+
+    .button.primary {
+      background: rgba(100, 168, 255, 0.16);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 150px minmax(0,1fr);
+      gap: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .date {
+      color: #9cd6ff;
+      font-weight: 820;
+      font-size: 0.92rem;
+      padding-top: 8px;
+      white-space: nowrap;
+    }
+
+    .entry-head {
+      display: grid;
+      grid-template-columns: 70px minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .org-logo-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.96);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.20);
+    }
+
+    .org-logo-wrap.dark {
+      background: #0d0d0f;
+    }
+
+    .org-logo {
+      display: block;
+      max-width: 86%;
+      max-height: 86%;
+      object-fit: contain;
+    }
+
+    .org-logo.pku {
+      max-width: 92%;
+      max-height: 92%;
+      border-radius: 50%;
+    }
+
+    .org-logo.cmu {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .org-logo.galbot {
+      max-width: 92%;
+      max-height: 92%;
+    }
+
+    .timeline-item h3 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--text-soft);
+      font-weight: 620;
+      line-height: 1.7;
+    }
+
+    .mini {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      white-space: pre-line;
+      padding-left: 84px;
+    }
+
+    .honors {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .honors li {
+      position: relative;
+      padding: 16px 18px 16px 44px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--text-soft);
+      line-height: 1.8;
+    }
+
+    .honors li::before {
+      content: "✦";
+      position: absolute;
+      left: 17px;
+      top: 15px;
+      color: #e9dbff;
+      text-shadow: 0 0 12px rgba(233,219,255,0.8);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 14px;
+    }
+
+    .contact-card {
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--text-soft);
+      overflow-wrap: anywhere;
+      min-height: 96px;
+    }
+
+    .contact-card b {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    footer {
+      margin-top: 28px;
+      text-align: center;
+      color: rgba(226,239,255,0.72);
+      font-size: 0.92rem;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.28);
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .panel { position: relative; top: auto; }
+    }
+
+    @media (max-width: 680px) {
+      .shell { width: min(100% - 24px, var(--max-width)); padding-top: 18px; }
+      .topbar { display: none; }
+      .panel, .section, .intro-card { border-radius: 26px; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .date { padding-top: 0; }
+      .mini { padding-left: 0; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .intro-card { padding: 28px 24px; min-height: auto; }
+      .section { padding: 24px 22px; }
+      .panel h1 { font-size: 2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="sky" aria-hidden="true"></canvas>
+
+  <div class="aurora" aria-hidden="true">
+    <div class="ribbon r1"></div>
+    <div class="ribbon r2"></div>
+    <div class="ribbon r3"></div>
+  </div>
+
+  <div class="shell">
+    <div class="topbar">
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#publications">Publications</a>
+        <a href="#edu-exp">Education & Experience</a>
+        <a href="#honors">Honors</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+
+    <main class="layout">
+      <aside class="panel" aria-label="Profile">
+        <div class="avatar"></div>
+
+        <h1>Yuansen Huang</h1>
+        <div class="cn-name">黄源森</div>
+
+        <p class="role">
+          Undergraduate Student<br />
+          Peking University
+        </p>
+
+        <div class="info-list">
+          <a class="info-item" href="mailto:2300011031@stu.pku.edu.cn">
+            <span class="icon">✉</span>
+            <span>2300011031@stu.pku.edu.cn</span>
+          </a>
+          <a class="info-item" href="https://github.com/Yuansen-Huang">
+            <span class="icon">⌘</span>
+            <span>github.com/Yuansen-Huang</span>
+          </a>
+          <div class="info-item">
+            <span class="icon">⌂</span>
+            <span>Beijing, China</span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="content">
+        <section class="intro-card">
+          <div>
+            <p class="intro-text">
+              I am an undergraduate student at Peking University, working on dexterous manipulation,
+              embodied intelligence, and 3D visual perception. My goal is to develop human-like dexterous policies 
+              that enable robots to interact with the physical world naturally and robustly.
+
+            <div class="tags">
+              <span class="tag">Dexterous Manipulation</span>
+              <span class="tag">Embodied AI</span>
+              <span class="tag">3D Vision</span>
+              <span class="tag">Generative Models</span>
+              <span class="tag">Robot Learning</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="publications">
+          <div class="section-header">
+            <h2>Selected Publications</h2>
+            <span class="section-kicker">Research</span>
+          </div>
+
+          <article class="publication">
+            <h3 class="pub-title">
+              KPGrasp: Scalable Keypoint Flow Matching for Dexterous Grasp Generation
+            </h3>
+            <div class="authors">
+              <strong>Yuansen Huang</strong>, Jiayi Chen, Haoran Liu, Yubin Ke, Bing Han,
+              Jiangran Lyu, Mi Yan, Li Yi, He Wang
+            </div>
+            <div class="venue">arXiv:2606.09314, 2026 · Computer Science &gt; Robotics</div>
+            <p>
+              A keypoint-based Flow Matching framework for scalable dexterous grasp generation,
+              representing dexterous hand poses with 3D keypoints and learning grasp priors from
+              large-scale data.
+            </p>
+            <div class="button-row">
+              <a class="button primary" href="https://arxiv.org/abs/2606.09314v1">arXiv</a>
+              <a class="button" href="https://arxiv.org/pdf/2606.09314v1">PDF</a>
+              <a class="button" href="#">Project Page</a>
+              <a class="button" href="#">Code</a>
+            </div>
+          </article>
+        </section>
+
+        <section class="section" id="edu-exp">
+          <div class="section-header">
+            <h2>Education & Experience</h2>
+            <span class="section-kicker">Timeline</span>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="date">2023.09 — Present</div>
+              <div>
+                <div class="entry-head">
+                  <div class="org-logo-wrap">
+                    <img class="org-logo pku" src="assets/pku_official_red.png" alt="Peking University logo" />
+                  </div>
+                  <div>
+                    <h3>Peking University</h3>
+                    <div class="sub">B.S. in Information and Computational Science</div>
+                  </div>
+                </div>
+                <div class="mini">School of Electronics Engineering and Computer Science
+Elite undergraduate program
+GPA: 3.925 / 4.0
+GPA rank: 1st in major
+Currently advised by Prof. He Wang</div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="date">2026.01 — 2026.05</div>
+              <div>
+                <div class="entry-head">
+                  <div class="org-logo-wrap">
+                    <img class="org-logo cmu" src="assets/cmu_official.png" alt="Carnegie Mellon University logo" />
+                  </div>
+                  <div>
+                    <h3>Carnegie Mellon University</h3>
+                    <div class="sub">Exchange Student in Computer Science</div>
+                  </div>
+                </div>
+                <div class="mini">GPA: 4.0 / 4.0
+Dean's List</div>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="date">2025.07 — Present</div>
+              <div>
+                <div class="entry-head">
+                  <div class="org-logo-wrap dark">
+                    <img class="org-logo galbot" src="https://images.seeklogo.com/logo-png/66/1/galbot-logo-png_seeklogo-660156.png" alt="Galbot logo" />
+                  </div>
+                  <div>
+                    <h3>Galbot</h3>
+                    <div class="sub">Intern, Dexterous Manipulation Department</div>
+                  </div>
+                </div>
+                <div class="mini">Working on dexterous manipulation, embodied robot learning, and related perception-to-action systems.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="honors">
+          <div class="section-header">
+            <h2>Honors & Awards</h2>
+            <span class="section-kicker">Selected</span>
+          </div>
+
+          <ul class="honors">
+            <li>2025 · Merit Student, Peking University</li>
+            <li>2025 · China Merchants Securities Scholarship, Peking University</li>
+            <li>2024 · National Scholarship, Peking University</li>
+            <li>2024 · Merit Student, Peking University</li>
+            <li>2024 · First Prize, 16th National College Mathematics Competition (Non-Mathematics)</li>
+            <li>2025 · Second Prize, Peking University Programming Contest</li>
+          </ul>
+        </section>
+
+        <section class="section" id="contact">
+          <div class="section-header">
+            <h2>Contact</h2>
+            <span class="section-kicker">Links</span>
+          </div>
+
+          <div class="contact-grid">
+            <a class="contact-card" href="mailto:2300011031@stu.pku.edu.cn">
+              <b>Email</b>
+              2300011031@stu.pku.edu.cn
+            </a>
+            <a class="contact-card" href="https://github.com/Yuansen-Huang">
+              <b>GitHub</b>
+              github.com/Yuansen-Huang
+            </a>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      © <span id="year"></span> Yuansen Huang. Last updated: June 2026.
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const canvas = document.getElementById("sky");
+    const ctx = canvas.getContext("2d", { alpha: true });
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    let stars = [];
+    let meteors = [];
+    let flows = [];
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const count = Math.min(300, Math.max(160, Math.floor((width * height) / 7000)));
+      stars = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: 0.45 + Math.random() * 1.55,
+        twinkle: Math.random() * Math.PI * 2,
+        speed: 0.00075 + Math.random() * 0.00125,
+        drift: 0.04 + Math.random() * 0.18
+      }));
+
+      meteors = [];
+      for (let i = 0; i < 14; i++) meteors.push(newMeteor(true));
+
+      flows = [
+        { px: 0.18, py: 0.22, radius: 0.36, color: "92,224,255", sx: 0.000018, sy: 0.000014, phase: 0.0 },
+        { px: 0.78, py: 0.24, radius: 0.33, color: "162,122,255", sx: 0.000014, sy: 0.000011, phase: 2.0 },
+        { px: 0.54, py: 0.72, radius: 0.34, color: "88,236,212", sx: 0.000011, sy: 0.000016, phase: 4.0 },
+        { px: 0.34, py: 0.84, radius: 0.30, color: "92,126,255", sx: 0.000015, sy: 0.000012, phase: 1.2 }
+      ];
+    }
+
+    function newMeteor(initial = false) {
+      return {
+        x: Math.random() * (width + 260) - 130,
+        y: initial ? Math.random() * height : -90 - Math.random() * 140,
+        len: 100 + Math.random() * 170,
+        speed: 5.4 + Math.random() * 6.4,
+        angle: Math.PI / 4 + (Math.random() - 0.5) * 0.16,
+        alpha: 0.16 + Math.random() * 0.46,
+        width: 0.9 + Math.random() * 1.5,
+        delay: Math.random() * (initial ? 170 : 110)
+      };
+    }
+
+    function drawDynamicColorField(t) {
+      ctx.globalCompositeOperation = "screen";
+
+      for (const f of flows) {
+        const x = width * (f.px + 0.055 * Math.sin(t * f.sx + f.phase));
+        const y = height * (f.py + 0.055 * Math.cos(t * f.sy + f.phase));
+        const radius = Math.max(width, height) * f.radius;
+        const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
+        g.addColorStop(0, `rgba(${f.color},0.085)`);
+        g.addColorStop(0.48, `rgba(${f.color},0.035)`);
+        g.addColorStop(1, `rgba(${f.color},0)`);
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, width, height);
+      }
+
+      const veil = ctx.createLinearGradient(
+        width * (0.1 + 0.04 * Math.sin(t * 0.000013)),
+        0,
+        width,
+        height
+      );
+      veil.addColorStop(0, "rgba(82, 132, 255, 0.020)");
+      veil.addColorStop(0.5, "rgba(146, 112, 255, 0.026)");
+      veil.addColorStop(1, "rgba(86, 236, 215, 0.018)");
+      ctx.fillStyle = veil;
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.globalCompositeOperation = "source-over";
+    }
+
+    function drawStars(t) {
+      for (const s of stars) {
+        const swayY = Math.sin(t * 0.00007 + s.twinkle) * s.drift * 14;
+        const glow = 0.45 + 0.55 * Math.sin(t * s.speed + s.twinkle);
+        const alpha = 0.13 + glow * 0.70;
+
+        ctx.beginPath();
+        ctx.arc(s.x, s.y + swayY, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        ctx.fill();
+
+        if (s.r > 1.2) {
+          ctx.beginPath();
+          ctx.arc(s.x, s.y + swayY, s.r * 2.8, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(112,197,255,${0.025 + glow * 0.075})`;
+          ctx.fill();
+        }
+      }
+    }
+
+    function drawMeteors() {
+      for (let i = 0; i < meteors.length; i++) {
+        const m = meteors[i];
+        if (m.delay > 0) {
+          m.delay--;
+          continue;
+        }
+
+        const dx = Math.cos(m.angle) * m.speed;
+        const dy = Math.sin(m.angle) * m.speed;
+        m.x += dx;
+        m.y += dy;
+
+        const tailX = m.x - Math.cos(m.angle) * m.len;
+        const tailY = m.y - Math.sin(m.angle) * m.len;
+
+        const grad = ctx.createLinearGradient(tailX, tailY, m.x, m.y);
+        grad.addColorStop(0, "rgba(255,255,255,0)");
+        grad.addColorStop(0.55, `rgba(110, 216, 255, ${m.alpha * 0.20})`);
+        grad.addColorStop(0.82, `rgba(217, 239, 255, ${m.alpha * 0.66})`);
+        grad.addColorStop(1, `rgba(255,255,255,${m.alpha})`);
+
+        ctx.beginPath();
+        ctx.moveTo(tailX, tailY);
+        ctx.lineTo(m.x, m.y);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = m.width;
+        ctx.lineCap = "round";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, m.width * 1.05, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${m.alpha})`;
+        ctx.fill();
+
+        if (m.x - m.len > width + 120 || m.y - m.len > height + 120) {
+          meteors[i] = newMeteor(false);
+        }
+      }
+    }
+
+    function animate(t) {
+      ctx.clearRect(0, 0, width, height);
+      drawDynamicColorField(t || 0);
+      drawStars(t || 0);
+      drawMeteors();
+
+      if (!reduceMotion) requestAnimationFrame(animate);
+    }
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    if (reduceMotion) {
+      animate(0);
+    } else {
+      requestAnimationFrame(animate);
+    }
+  </script>
+</body>
+</html>
