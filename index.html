@@ -22,7 +22,7 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; font-size: 15px; }
 
     body {
       margin: 0;
@@ -158,6 +158,19 @@
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    .text-link {
+      color: #cfe9ff;
+      text-decoration: underline;
+      text-decoration-color: rgba(207, 233, 255, 0.45);
+      text-underline-offset: 3px;
+      transition: 180ms ease;
+    }
+
+    .text-link:hover {
+      color: #ffffff;
+      text-decoration-color: rgba(255, 255, 255, 0.78);
     }
 
     .shell {
@@ -672,6 +685,7 @@
               I am an undergraduate student at Peking University, working on dexterous manipulation,
               embodied intelligence, and 3D visual perception. My goal is to develop human-like dexterous policies 
               that enable robots to interact with the physical world naturally and robustly.
+            </p>
 
             <div class="tags">
               <span class="tag">Dexterous Manipulation</span>
@@ -695,7 +709,7 @@
             </h3>
             <div class="authors">
               <strong>Yuansen Huang</strong>, Jiayi Chen, Haoran Liu, Yubin Ke, Bing Han,
-              Jiangran Lyu, Mi Yan, Li Yi, He Wang
+              Jiangran Lyu, Mi Yan, Li Yi, <a class="text-link" href="https://hughw19.github.io/" target="_blank" rel="noopener noreferrer">He Wang</a>
             </div>
             <div class="venue">arXiv:2606.09314, 2026 · Computer Science &gt; Robotics</div>
             <p>
@@ -735,7 +749,7 @@
 Elite undergraduate program
 GPA: 3.925 / 4.0
 GPA rank: 1st in major
-Currently advised by Prof. He Wang</div>
+Currently advised by Prof. <a class="text-link" href="https://hughw19.github.io/" target="_blank" rel="noopener noreferrer">He Wang</a></div>
               </div>
             </div>
 
